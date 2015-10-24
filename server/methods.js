@@ -3,6 +3,7 @@ Meteor.methods({
 });
 
 function search( query ) {
+  // call to Deezer API
   var response = HTTP.get('http://api.deezer.com/search/track', 
                           { params: { q: query,
                                       index: 0,
@@ -15,12 +16,7 @@ function search( query ) {
     console.error('no response');
     return;
   }
-
-  // console.log('response.data.data.length');
-  // console.log(response.data.data.length);
-  // console.log('response.data.total');
-  // console.log(response.data.total);
-
+  
   // var count = 0; // just for debugging
 
 
@@ -50,8 +46,7 @@ function search( query ) {
       // count++;
     } 
     catch (e) {
-      console.log('catch e');
-      console.log(e);
+      console.log('catch e: '+e);
     }
   });
 

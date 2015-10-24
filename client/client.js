@@ -15,18 +15,20 @@ Template.main.helpers({
   },
 
   moreResults: function(){
-  	console.log(Songs.find().count());
   	if(Songs.find().count() >= 25)
   		return true;
+  	return false;
   },
 
   songs: function () {
-      return Songs.find({}, {sort: {rank:1} });
+  	//sort by popularity	
+    return Songs.find({}, {sort: {rank:1} });
   },
 	
 	toMinutes: function(duration){
-		var minutes = Math.floor(duration / 60);
-		var seconds = Math.floor(duration % 60);
+		var
+		minutes = Math.floor(duration / 60),
+		seconds = Math.floor(duration % 60);
 		if (seconds < 10)
 			seconds = "0"+seconds;
 		return minutes+":"+seconds;
@@ -38,7 +40,10 @@ Template.main.helpers({
 Template.main.events({
 
 	"click #remove-button" : function(event){
+
 		$('#search').val("");
+		$('.filter').val('');
+
 		var filters = Session.get('filters');
 
 		filters.query = '';
@@ -48,8 +53,6 @@ Template.main.events({
 		filters.page  = 0;
 
 		Session.set('filters', filters);
-
-		$('.filter').val('');
 
     $('#showMoreResults').show();
 	},
@@ -84,15 +87,19 @@ Template.main.events({
 	},
 
 	"click .player": function(event){
-		$this = $(event.target);
+
+		var
+		$this  = $(event.target),
 		$audio = $this.parent('td').children('audio')[0];
 
 		if($this.hasClass('glyphicon-play')){
 			$('.glyphicon-pause').addClass('hidden');
 			$('.glyphicon-play').removeClass('hidden');
+			
 			$('audio').each(function(){
 				$(this)[0].pause();
 			});
+
 			$($audio)[0].play();
 		}
 		else
@@ -102,7 +109,7 @@ Template.main.events({
 	},
 	
 	"submit #searchForm": function (event) {
-	    // Prevent default browser form submit
+	  // Prevent default browser form submit
     event.preventDefault();
     
     // Get value from form element
@@ -124,28 +131,56 @@ Template.main.events({
 	},
 
 	"click .sort": function(event){
-    var index = $(event.target).parents('th')[0].cellIndex;
-    $('th').removeClass('active');
-    $(event.target).parents('th').addClass('active');
-    var dict = {};
+		var
+		$th       = $(event.target).parents('th'),
+    index     = $($th)[0].cellIndex,
+    ascending = true;
 
-    var length = $('table tbody tr').length;
+    // css classes according to sorting order
+    $('th').removeClass('active');
+    $($th).addClass('active');
+
+    if( ! $($th).hasClass('asc') && ! $($th).hasClass('desc')){
+    	$($th).addClass('asc');
+    }
+    else if( $($th).hasClass('desc') ){
+    	$($th).removeClass('desc');
+    	$($th).addClass('asc');
+    }
+    else if( $($th).hasClass('asc') ){
+    	$($th).removeClass('asc');
+    	$($th).addClass('desc');
+    	ascending = false;
+    }
+    
+    
+    var 
+    dict   = {},
+    length = $('table tbody tr').length;
+
+    // create dictionary "column content _ id(unique) : row"
     for (var i=0; i<length; i++){
     	var $id = ($('table tbody')[0].rows[i].getAttribute('id'));
     	dict[$('table tbody')[0].rows[i].cells[index].innerText + "_" + $id] = $('table tbody')[0].rows[i].outerHTML;
   	}
 
+  	// sort only the keys of the dictionary
     var keys = Object.keys(dict); 
+    
 		keys.sort(); 
+		if (!ascending)
+			keys.reverse();	
 		
 		var html = [];
 
+		// store the sorted rows in array
 		for (var i=0; i<length; i++) { 
 			var key = keys[i];
 
 			html.push(dict[key]);
 		} 
 
+		// replace table contents with sorted rows
 		$('table tbody').html(html.join(''));
 	},
 
@@ -185,6 +220,7 @@ function showMoreVisible() {
 }
 	
 
+// detect scrolldown
 Meteor.startup(function (argument) {
     
   var lastScrollTop = 0;
@@ -193,6 +229,7 @@ Meteor.startup(function (argument) {
 
     var st = $(window).scrollTop();
 
+    	// show more results when scrolling near the bottom
       if (st + $(window).height() > $(document).height() - 100) {
         if (st > lastScrollTop){
           showMoreVisible();

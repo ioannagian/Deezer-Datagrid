@@ -62,7 +62,7 @@ table.table thead th.active{
 	cursor:col-resize;
 	color:#007FEB;
 }
-.resize.glyphicon-option-vertical{
+.resize.glyphicon-transfer{
 	float:right;
 }
 
@@ -70,8 +70,14 @@ table th.resizing .resize{
     cursor: col-resize;
 }
 table th{
-	min-width: 90px;
+	min-width: 110px;
 } 
+th span.asc, th span.desc{
+  display:none;
+}
+th.active.asc span.asc, th.active.desc span.desc{
+  display:inline-block;
+}
 
 .player{
 	color:#21b26a;
