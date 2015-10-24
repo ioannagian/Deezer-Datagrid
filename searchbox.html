@@ -14,6 +14,11 @@
 
   <form id="searchForm">
     <div class="input-group input-group-lg">
+      <span class="input-group-btn">
+        <div class="" id="remove-button">
+          <span title='Remove' class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </div>
+      </span>
       <input id="search" type="text" name="text" class="form-control" placeholder="Type a song title" autocomplete="off" value="{{filters.query}}">
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit">
@@ -34,19 +39,19 @@
       <tr>
         <th> 
           Preview
-          <span class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+          <span title='Drag and drop to resize' class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
         </th>
         <th>
           <span class='sort' title='Click to sort'>Title</span>
-          <span class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+          <span title='Drag and drop to resize' class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
         </th>
         <th>
           <span class='sort' title='Click to sort'>Artist</span>
-          <span class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+          <span title='Drag and drop to resize' class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
         </th>
         <th>
           <span class='sort' title='Click to sort'>Duration</span>
-          <span class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+          <span title='Drag and drop to resize' class="resize glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
         </th>
         <th>
           <span class='sort' title='Click to sort'>Album</span>
@@ -79,7 +84,9 @@
               <span class="player glyphicon glyphicon-pause hidden" aria-hidden="true"></span>
             </td>
             <td><a href="{{link}}" target="_blank" class="title">{{title}}</a></td>
-            <td><a href="{{artist_link}}" target="_blank" class="artist">{{artist}}</a></td>
+            <td><img class="photo cover" src="{{artist_photo}}"/>
+                <a href="{{artist_link}}" target="_blank" class="artist">{{artist}}</a>
+            </td>
             <td><span class="badge">{{toMinutes duration}}</span></td>
             <td><img class="cover" src="{{cover}}"/><span class="album">{{album}}</span></td>
             

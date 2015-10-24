@@ -30,8 +30,6 @@ Template.main.helpers({
 		if (seconds < 10)
 			seconds = "0"+seconds;
 		return minutes+":"+seconds;
-
-
 	}
 
 });
@@ -39,7 +37,23 @@ Template.main.helpers({
 
 Template.main.events({
 
-	
+	"click #remove-button" : function(event){
+		$('#search').val("");
+		var filters = Session.get('filters');
+
+		filters.query = '';
+		filters.title = '';
+		filters.artist = '';
+		filters.album = '';
+		filters.page  = 0;
+
+		Session.set('filters', filters);
+
+		$('.filter').val('');
+
+    $('#showMoreResults').show();
+	},
+
 	"click .clear" : function(event){
 		var filters = Session.get('filters');
 

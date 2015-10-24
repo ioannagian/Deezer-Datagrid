@@ -12,6 +12,22 @@ body{
 #results{
   margin-top: 20px;
 }
+#remove-button{
+  background: none;
+  border: none;
+  outline:0;
+}
+#remove-button span{
+  font-size: 20px;
+  color:#ccc;
+  padding:5px;
+  outline:0;
+}
+#remove-button span:hover{
+  font-size: 20px;
+  color:#888;
+  outline:0;
+}
 #searchForm{
 	margin-top: 20px;
 	width: 400px;
@@ -28,6 +44,7 @@ body{
 }*/
 .cover{
 	float:left;
+  width:50px;
 }
 .sort:hover{
 	cursor:pointer;

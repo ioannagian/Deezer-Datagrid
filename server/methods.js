@@ -35,6 +35,7 @@ function search( query ) {
       preview: item.preview,
       artist: item.artist.name,
       artist_link: item.artist.link,
+      artist_photo: item.artist.picture_small,
       album: item.album.title,
       cover: item.album.cover_small,
       rank: item.rank,
